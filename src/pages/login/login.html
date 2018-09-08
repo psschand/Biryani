@@ -4,40 +4,64 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content  padding>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col width-67>
-        <img src="../assets/icon/icon.png"/>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <div >
-      <form  #registerForm="ngForm">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
-              
-              <ion-item>
-                <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>
-              </ion-item>
-              
-            </ion-list>
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col class="signup-col">
-            <button ion-button color="dark" full (click)="login()" >Login</button>
-            <button ion-button block color="login_pasive_button" outline (click)="createAccount()" >Create New Account</button>
-            <button ion-button block color="login_pasive_button" clear (click)="resetPassword()" >Reset Password</button>
-          </ion-col>
-        </ion-row>
-        
-      </form>
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="../assets/icon/icon.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <div >
+
+      <form [formGroup]="loginForm"  novalidate>
+          <!--divs-->
+          
+            <div class="row responsive-md">
+              <div class="col col-50 col-offset-25">
+                  
+                         <!---->
+     
+     <ion-item>
+       <ion-label stacked>Email</ion-label>
+       <ion-input #email [(ngModel)]="email1" formControlName="email" type="email" placeholder="Your email address" 
+         [class.invalid]="!loginForm.controls.email.valid && loginForm.controls.email.dirty"></ion-input>
+     </ion-item>
+     <ion-item class="error-message" 
+       *ngIf="!loginForm.controls.email.valid  && loginForm.controls.email.dirty">
+       <p>Please enter a valid email.</p>
+     </ion-item>
+    
+     <ion-item>
+       <ion-label stacked>Password</ion-label>
+       <ion-input #password  [(ngModel)]="password1" formControlName="password" type="password" placeholder="Your password" 
+         [class.invalid]="!loginForm.controls.password.valid && loginForm.controls.password.dirty"></ion-input>
+     </ion-item>
+     <ion-item class="error-message" 
+       *ngIf="!loginForm.controls.password.valid  && loginForm.controls.password.dirty">
+       <p>Your password needs more than 6 characters.</p>
+     </ion-item>
+     
+ <button ion-button block [disabled]="!loginForm.controls.password.valid || !loginForm.controls.email.valid  " type="submit" (click)="login()" >
+    Login
+  </button>
+                   <button ion-button block clear (click)="createAccount()">
+    Create a new account
+  </button>
+ 
+  <button ion-button block clear (click)="resetPassword()">
+    I forgot my password
+  </button>
+
+    
     </div>
-  </ion-content>
+    </div>
+    
+    </form>
+    
+
+   
+    
+  </div>
+</ion-content>

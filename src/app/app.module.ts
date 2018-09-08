@@ -31,6 +31,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
+
+import {ResetPassword}from '../pages/reset-password/reset-password';
+import {Signup} from '../pages/signup/signup';
+
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +49,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
     CartPage,
     OrdersPage,
     BillingPage,
-    LogoutPage
+    LogoutPage,
+    ResetPassword,
+    Signup
   ],
   imports: [
     BrowserModule,
@@ -71,7 +79,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
     CartPage,
     OrdersPage,
     BillingPage,
-    LogoutPage
+    LogoutPage,
+    ResetPassword,
+    Signup
   ],
   providers: [
     StatusBar,
