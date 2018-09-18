@@ -121,6 +121,11 @@ export class CartService {
 
   };
   
+
+
+
+
+
   // Order services
   checkout(userid: string, deliveryDetails : string ){
 
@@ -132,6 +137,9 @@ export class CartService {
 
     // Add items to orders
     var orderItem : FirebaseListObservable<any> = this.db.list('orders/'+userid);
+
+    // Add items to orders
+    var om : FirebaseListObservable<any> = this.db.list('om/');
     
     // Because subscribed cart list would prevent adding items to cart after an order is created.
     cartItemUnsubscribed.forEach(rows => {
@@ -145,8 +153,19 @@ export class CartService {
         //%%%%%%%%%%%%%%%%
           if(cartItem.quantity <= productData.val().stock && productData.val().available== true){
             
+            //get the push key value
+            // var key = om.push().getKey();
+
+            //then you can write in that node in this way
+           // mDatabase.child("posts").child(key).setValue(yourValue)
+            var insertData = om.push(cartItem).then(ca=>{      
+            var insertedKey = ca.getKey(); // last inserted key
+            console.log("inserted key",insertedKey);
+            cartItem.orderid=insertedKey;
             orderItem.push(cartItem); // add the item to orders
-             
+          }   );
+
+
             this.cartItems.remove(cartItem.$key); // remove the item from the cart
 
             // decrement the item qty
@@ -166,5 +185,18 @@ export class CartService {
 
   loadOrders(userid: string){
     this.orderItems = this.db.list('orders/'+userid);
-  }
+  };
+
+  // Cancel services
+cancelorder(userid: string, product : any ){
+  this.db.object(`orders/${userid}/${product.$key}/status`).set('cancelled');
+  this.db.object(`om/${product.orderid}/status`).set('cancelled');
+  //var oid=  this.db.list(`orders/${userid}/${product.$key}/orderid`).take(1);
+  // //console.log("userid:",userid,"/product:",product.$key,"/oid:",oid,"oid.orderid",oid.orderid)
+  // this.db.object(`orders/${userid}/${product.$key}/status`).set('cancelled');
+  console.log("orderid from ui:",product.orderid,product);
+
+
+}
+
 }

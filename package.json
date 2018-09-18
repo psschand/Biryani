@@ -21,11 +21,15 @@
     "@angular/platform-browser": "4.4.3",
     "@angular/platform-browser-dynamic": "4.4.3",
     "@ionic-native/core": "3.12.1",
+    "@ionic-native/paypal": "^4.13.0",
     "@ionic-native/splash-screen": "3.12.1",
     "@ionic-native/status-bar": "3.12.1",
     "@ionic/storage": "2.0.1",
     "angularfire2": "^4.0.0-rc0",
+    "card.io.cordova.mobilesdk": "^2.1.0",
+    "com.paypal.cordova.mobilesdk": "^3.5.0",
     "cordova-android": "7.0.0",
+    "cordova-browser": "5.0.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^2.1.0",
@@ -39,7 +43,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.0.0",
+    "@ionic/app-scripts": "3.2.0",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",
@@ -49,10 +53,12 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "com.paypal.cordova.mobilesdk": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }

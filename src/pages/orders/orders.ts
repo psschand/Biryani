@@ -13,7 +13,7 @@ import {AuthService} from '../../providers/auth.service';
 })
 export class OrdersPage {
   orders :FirebaseListObservable<any>;
-
+  
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public cartService: CartService,
@@ -23,6 +23,8 @@ export class OrdersPage {
     this.orders = this.cartService.orderItems;
   }
 
-
+  CancelOrder(product)  {
+    this.cartService.cancelorder(this.authService.getLoggedUID(), product);
+  }
 
 }

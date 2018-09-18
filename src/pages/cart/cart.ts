@@ -40,7 +40,12 @@ export class CartPage {
     this.cartService.removeCartItem(this.authService.getLoggedUID(),item.$key);
   }
 
+  
+
   checkout() : void {
+
+    //var cartout={"amount":10 };
+
     this.navCtrl.push(BillingPage);
   }
 
