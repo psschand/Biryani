@@ -14,7 +14,6 @@ import { EmailValidator } from '../../validators/email';
 
 import { ResetPassword } from '../reset-password/reset-password';
 import { Signup } from '../signup/signup';
-import { IntroSlidesPage } from '../intro-slides/intro-slides';
 
 //import { FormBuilder, Control, ControlGroup, Validators, FORM_DIRECTIVES } from '@angular/common';
 @IonicPage()
@@ -77,9 +76,6 @@ export class LoginPage  {
     this.navCtrl.push(ForgotPassPage);
   }
 
-  IntroSlides():void{
-    this.navCtrl.push(IntroSlidesPage);
-  }
 // //--------------------------------------------------------------------------------------------------------------
 // loginUser(): void {
 //   if (!this.loginForm.valid) {
