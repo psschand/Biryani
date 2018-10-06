@@ -5,37 +5,41 @@
 </ion-header>
  
 <ion-content  padding>
-  <div class="login-box">
-  <ion-row>
-      <ion-col></ion-col>
-      <ion-col width-67>
-        <img src="../assets/icon/icon.png"/>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <form (ngSubmit)="register()" #registerForm="ngForm">
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
-            
+  <div >
+    <form [formGroup]="registerForm"  novalidate>
+      <!--divs-->
+      
+        <div class="row responsive-md">
+          <div class="col col-50 col-offset-25">
             <ion-item>
-              <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email"required></ion-input>
+              <ion-label stacked>Email</ion-label>
+              <ion-input #email [(ngModel)]="email1" formControlName="email" type="email" placeholder="Your email address" 
+                [class.invalid]="!registerForm.controls.email.valid && registerForm.controls.email.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" 
+              *ngIf="!registerForm.controls.email.valid  && registerForm.controls.email.dirty">
+              <p>Please enter a valid email.</p>
+            </ion-item>  
+
+            <ion-item>
+              <ion-label stacked>Password</ion-label>
+              <ion-input #password  [(ngModel)]="password1" formControlName="password" type="password" placeholder="Your password" 
+                [class.invalid]="!registerForm.controls.password.valid && registerForm.controls.password.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" 
+              *ngIf="!registerForm.controls.password.valid  && registerForm.controls.password.dirty">
+              <p>Your password needs more than 6 characters.</p>
             </ion-item>
             
-            <ion-item>
-              <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password"  required></ion-input>
-            </ion-item>
-            
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      
-      <ion-row>
-        <ion-col class="signup-col">
-          <button color="dark" ion-button class="submit-btn" full type="submit" >Register</button>
-        </ion-col>
-      </ion-row>
-      
-    </form>
-  </div>
-</ion-content>
+           <button ion-button block [disabled]="!registerForm.controls.password.valid || !registerForm.controls.email.valid  " type="submit" (click)="register()" >
+           Register
+           </button>
+           
+
+          </div>
+        </div>
+        
+        </form>
+        
+          </div>
+        </ion-content>

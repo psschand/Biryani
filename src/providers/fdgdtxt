@@ -6,9 +6,6 @@ import { SharedService } from './shared.service';
 @Injectable()
 export class CartService {
   items: any;
-  odata:any;
-  cnt:number;
-  amount:any;
   cartItems : FirebaseListObservable<any>;
   orderItems: FirebaseListObservable<any>;
 
@@ -146,13 +143,9 @@ export class CartService {
     
    // create a list of items in an order
    this.items=[]
-   this.odata=[]
-   this.cnt=0
-   this.amount=0
-    
+
     // Because subscribed cart list would prevent adding items to cart after an order is created.
     cartItemUnsubscribed.forEach(rows => {
-      console.log(rows)
       rows.forEach(cartItem => { 
         console.log(cartItem)
         cartItem.status = 1;
@@ -168,20 +161,13 @@ export class CartService {
 
             //then you can write in that node in this way
            // mDatabase.child("posts").child(key).setValue(yourValue)
-           //-----------------------------
-          //   var insertData = om.push(cartItem).then(ca=>{      
-          //   var insertedKey = ca.getKey(); // last inserted key
-          //   console.log("inserted key",insertedKey);
-          //   cartItem.orderid=insertedKey;
-          //   orderItem.push(cartItem); // add the item to orders
-          // }   );
-          //------------------------------------
-          
-          this.items[this.cnt]={ image:cartItem.image,name: cartItem.name,price:cartItem.price,quantity: cartItem.quantity}
-          this.cnt=this.cnt+1
-          this.amount=this.amount+cartItem.price
+            var insertData = om.push(cartItem).then(ca=>{      
+            var insertedKey = ca.getKey(); // last inserted key
+            console.log("inserted key",insertedKey);
+            cartItem.orderid=insertedKey;
+            orderItem.push(cartItem); // add the item to orders
+          }   );
 
-          this.odata={delivery:cartItem.delivery,status:cartItem.status,cartAmount:this.amount}
 
             this.cartItems.remove(cartItem.$key); // remove the item from the cart
 
@@ -196,15 +182,7 @@ export class CartService {
         
       });
     });
-            this.odata.items= this.items
-            //this.odata.cartAmount=this.cartAmount
-            var insertData = om.push(this.odata).then(ca=>{      
-            var insertedKey = ca.getKey(); // last inserted key
-            console.log("inserted key",insertedKey);
-            this.odata.orderid=insertedKey;
-            orderItem.push(this.odata); // add the item to orders
-          }   );
-          console.log("odata",this.odata)
+
 
   }
 
@@ -225,3 +203,78 @@ cancelorder(userid: string, product : any ){
 }
 
 }
+---------------------
+To set a custom id you could do something like this:
+
+FirebaseNodeName.child("user").child(customId).set(key, value);
+
+You can also try something like this:
+
+var empsRef = ref.child("employees");
+
+empsRef.child('11111').set({
+  lastname: "Lee",
+  firstname: "Kang"
+});
+
+empsRef.child('22222').set({
+  lastname: "Nut",
+  firstname: "Dough"
+});
+--------------------------
+
+
+Math.floor(new Date().valueOf() * Math.random())
+
+
+
+
+-----------------------------
+some_promise_call()
+.then(function success(res) { logger.log(res) },
+      function error(err) { logger.log(err) })
+      ----------------------------------------
+
+
+var onComplete = function(error) {
+    if (error) {
+        console.log('Operation failed');
+    } else {
+        console.log(' Operation completed');
+    }
+};
+---------------------------------------------------------------------------------
+
+this.generate = function() {
+			 var ts = this.timestamp.toString();
+			 var parts = ts.split( "" ).reverse();
+			 var id = "";
+			 var n =(Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase()
+       
+       var t=Date.now().toString(36).toUpperCase()
+        var h = parseInt(t, 36)
+        var dt36 = new Date(h)
+        
+       var da=Date.now()
+       var das=da.toString()
+       ts = Number(das)
+       var dt = new Date(ts)
+			 
+       for( var i = 0; i < this.length; ++i ) {
+				var index = _getRandomInt( 0, parts.length - 1 );
+				id += parts[index];	 
+			 }
+			 
+			 return id + "----"+dt+"----"+das+"----"+dt36+"----"+t+"----"+dt;
+		 }
+
+     function rStr() { var s=Math.random().toString(36).slice(2); 
+  return s.length===10 ? s : rStr(); }
+
+   var functionHolder2= function rStr() { var s=Math.random().toString(36).slice(2); 
+   
+  return s.length===10 ? alert(s) : rStr(); }
+
+  function rStr() { var s=Math.random().toString(36).slice(9); 
+  return s.length===3 ? s : rStr(); }
+  -------------------------------------------

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,LoadingController,AlertController  } from 'ionic-angular';
+import { EmailValidator } from '../../validators/email';
+import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
 
 import { ProductsPage } from '../products/products';
 import { RegisterPage } from '../register/register';
@@ -7,9 +9,7 @@ import { ForgotPassPage } from '../forgot-pass/forgot-pass';
 
 import {AuthService} from '../../providers/auth.service';
 import {SharedService} from '../../providers/shared.service';
-import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
 
-import { EmailValidator } from '../../validators/email';
 
 
 import { ResetPassword } from '../reset-password/reset-password';
@@ -56,18 +56,48 @@ export class LoginPage  {
   login(){
     this.sharedService.showLoading(); // start loading
 
-    this.authService.login(this.email1,this.password1).then(value => {
-      this.sharedService.hideLoading(); // stop loading
-      this.navCtrl.setRoot(ProductsPage);
-      console.log(this.email1,this.password1)
-    })
-    .catch(err => {
-     // this.sharedService.hideLoading();
-     console.log(err)
-      this.sharedService.showToast("Something went wrong!")
-      //this.navCtrl.setRoot(LoginPage);
+    // this.authService.login(this.email1,this.password1).then(value => {
+    //   this.sharedService.hideLoading(); // stop loading
+    //   this.navCtrl.setRoot(ProductsPage);
+    //   console.log(this.email1,this.password1)
+    // })
+    // .catch(err => {
+    //  // this.sharedService.hideLoading();
+    //  console.log(err)
+    //   this.sharedService.showToast("Something went wrong!")
+    //   //this.navCtrl.setRoot(LoginPage);
+    // });
+
+  if (!this.loginForm.valid) {
+      console.log(this.loginForm.value);
+  } else {
+  this.authService.login(this.email1,this.password1).then((user) => {
+    this.sharedService.hideLoading(); // stop loading
+    this.navCtrl.setRoot(ProductsPage);
+  
+  }, (error) => {
+    var errorMessage: string = error.message;
+    let errorAlert = this.alertCtrl.create({
+        message: errorMessage,
+        buttons: [
+            {
+                text: "Ok",
+                role: 'cancel'
+            }
+        ]
     });
+    errorAlert.present();
+  });
   }
+  
+  
+  
+  }
+  
+
+
+
+  
   createAccount(): void{
     this.navCtrl.push(RegisterPage);
   }

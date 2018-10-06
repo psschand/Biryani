@@ -9,11 +9,11 @@ export class AuthService {
   constructor(public firebaseAuth: AngularFireAuth) {
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string): firebase.Promise<any> {
     return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string) : firebase.Promise<any>{
     return this.firebaseAuth.auth.signInWithEmailAndPassword(email, password)
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
     return this.firebaseAuth.auth.currentUser.uid;
   }
   
-  recover(email):void{
+  recover(email){
     this.firebaseAuth.auth.sendPasswordResetEmail(email);
   }
 
