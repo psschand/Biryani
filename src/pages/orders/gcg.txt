@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar  color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><ion-icon name="ios-flash"></ion-icon>Orders</ion-title>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content   class="bg-style" >
+    <ion-list>
+      <ion-item *ngFor="let order of orders | async" >
+        
+        
+        <ion-item *ngFor="let oi of order.items | async" >
+
+            <ion-thumbnail item-start >
+                <img src={{oi.image}}>
+              </ion-thumbnail>
+        <h2>{{order.name}}</h2>
+        <p>
+          <ion-badge color="danger"> Rs {{oi.price}} </ion-badge> x {{oi.quantity}}
+        </p>
+      </ion-item>
+        <ion-item *ngIf="compareDate(order.deliveryDate)" >
+        <button style=" font-size: 20px;" ion-button clear item-right (click)="CancelOrder(order)" >
+          <ion-icon color="danger" name="ios-remove-circle"></ion-icon>
+        </button>
+        </ion-item>
+
+      
+        <br>
+        <ion-item style="margin: -20px;">
+          <ion-range readonly disabled min="0" max="3" step="1" snaps="true"  color="danger" ngModel="{{order.status}}" >
+            <ion-icon range-left small color="danger" name="md-cart"></ion-icon>
+            <ion-icon range-right color="danger" name="md-home"></ion-icon>
+          </ion-range>
+        </ion-item>
+
+      </ion-item>
+    </ion-list>
+
+</ion-content>

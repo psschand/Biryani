@@ -1,8 +1,10 @@
+import { DateTime } from 'ionic-angular';
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/take';
 import { SharedService } from './shared.service';
+import { stringify } from '@angular/core/src/util';
 @Injectable()
 export class CartService {
   items: any;
@@ -11,7 +13,7 @@ export class CartService {
   amount:any;
   cartItems : FirebaseListObservable<any>;
   orderItems: FirebaseListObservable<any>;
-
+  del_address:any="vodafoneHQ,rg145nf"
   cartAmount : number  = 0;
   constructor(public db: AngularFireDatabase,
               private sharedService: SharedService
@@ -179,9 +181,12 @@ export class CartService {
           
           this.items[this.cnt]={ image:cartItem.image,name: cartItem.name,price:cartItem.price,quantity: cartItem.quantity}
           this.cnt=this.cnt+1
-          this.amount=this.amount+cartItem.price
-
-          this.odata={delivery:cartItem.delivery,status:cartItem.status,cartAmount:this.amount}
+          this.amount=Number(this.amount)+(Number(cartItem.price)*Number(cartItem.quantity));
+          var delverytime=Number(this.nextDate(5));
+          console.log("delvertdate",delverytime)
+          console.log("Actual cart amount",this.cartAmount)
+          console.log("calculated amount",this.amount)
+          this.odata={delivery:cartItem.delivery,status:cartItem.status,cartAmount:this.amount,deliveryDate:delverytime,createdtAt:Date.now()}
 
             this.cartItems.remove(cartItem.$key); // remove the item from the cart
 
@@ -207,6 +212,15 @@ export class CartService {
           console.log("odata",this.odata)
 
   }
+  
+//takes dayIndex from sunday(0) to saturday(6)
+
+  nextDate(dayIndex):Date {
+    var today = new Date();
+    today.setDate(today.getDate() + (dayIndex - 1 - today.getDay() + 7) % 7 + 1);
+    today.setHours(14,0,0)
+    return today;
+}
 
   loadOrders(userid: string){
     this.orderItems = this.db.list('orders/'+userid);
@@ -223,5 +237,17 @@ cancelorder(userid: string, product : any ){
 
 
 }
+
+
+updateApp():any{
+
+  this.db.object(`app/config/android/version`, {preserveSnapshot:true} ).first().subscribe(data => { 
+      var str =data.val()
+      return str ;
+    
+});
+}
+
+
 
 }

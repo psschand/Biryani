@@ -36,8 +36,8 @@ export class LoginPage  {
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController, 
               public loadingCtrl: LoadingController,
-               
               public nav: NavController
+              
              ) {
         this.authService.logout();
         this.loginForm = formBuilder.group({
@@ -48,6 +48,9 @@ export class LoginPage  {
 
  
   ionViewDidLoad() {
+
+   
+
     if(this.authService.isLoggedIn()){
       this.navCtrl.setRoot(ProductsPage);
     }

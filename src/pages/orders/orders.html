@@ -15,14 +15,24 @@
     <ion-list>
       <ion-item *ngFor="let order of orders | async" >
         
-        <ion-thumbnail item-start >
-          <img src={{order.image}}>
-        </ion-thumbnail>
+        
+        <ion-item *ngFor="let oi of order.items" >
 
+            <ion-thumbnail item-start >
+                <img src={{oi.image}}>
+              </ion-thumbnail>
         <h2>{{order.name}}</h2>
         <p>
-          <ion-badge color="danger"> Rs {{order.price}} </ion-badge> x {{order.quantity}}
+          <ion-badge color="danger"> Rs {{oi.price}} </ion-badge> x {{oi.quantity}}
         </p>
+      </ion-item>
+        <ion-item *ngIf="compareDate(order.deliveryDate)" >
+        <button style=" font-size: 20px;" ion-button clear item-right (click)="CancelOrder(order)" >
+          <ion-icon color="danger" name="ios-remove-circle"></ion-icon>
+        </button>
+        </ion-item>
+
+      
         <br>
         <ion-item style="margin: -20px;">
           <ion-range readonly disabled min="0" max="3" step="1" snaps="true"  color="danger" ngModel="{{order.status}}" >

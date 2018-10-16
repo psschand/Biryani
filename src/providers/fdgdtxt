@@ -278,3 +278,67 @@ this.generate = function() {
   function rStr() { var s=Math.random().toString(36).slice(9); 
   return s.length===3 ? s : rStr(); }
   -------------------------------------------
+  Ok! I got it to work. For future reference, this #211 (comment) is the essence of the solution:
+
+I'm using angular-cli. Add it to angular-cli-build.js, and src/system-config.js (I think thats part of the install anyway).
+Add typings to typings.json. I addded "firebase": "file:node_modules/firebase/firebase.d.ts" to my globalDependencies.
+Add TIMESTAMP support by adding the block in the comment above ti src/typings.d.ts
+Import firebase as import * as firebase from 'firebase'; where you want to use TIMESTAMP, and then refernce it as firebase.database.ServerValue.TIMESTAMP.
+Thanks so much for the help.
+------------------------------------
+next friday
+var day = new Date("2018/10/12");
+var d = new Date("2018/10/12");
+
+var days = 7 - day.getDay() + 5;;
+
+var nextDay = new Date(day.setDate(day.getDate() + days)); 
+
+
+console.log("current date",d.toString(),"next friday is on",nextDay.toString());
+-----------------------------------------------
+//takes dayIndex from sunday(0) to saturday(6)
+function nextDate(dayIndex) {
+    var today = new Date();
+    today.setDate(today.getDate() + (dayIndex - 1 - today.getDay() + 7) % 7 + 1);
+    return today;
+}
+document.write("Next Sunday is: "+nextDate(0).toLocaleString()+"<br/>");
+document.write("Next Thursday is: "+nextDate(4).toLocaleString()+"<br/>");
+document.write("Next Saturday is: "+nextDate(6).toLocaleString());
+------------------------------------------------------------------------------
+  var inputJSON = {
+        "created_date": "2017-04-13 10:12:12",
+        "current_time": "2017-04-13 11:10:46"
+    };
+
+    function getDataDiff(startDate, endDate) {
+        var diff = endDate.getTime() - startDate.getTime();
+        var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+        var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+        var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+        var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
+        return { day: days, hour: hours, minute: minutes, second: seconds };
+    }
+    var diff = getDataDiff(new Date(inputJSON.created_date), new Date(inputJSON.current_time));
+    console.log(diff);
+    ----------------------------------------------------------------------------------
+    
+let date1: string = params.data.incidentTime;
+let date2: string = params.data.creationTime;
+
+let diffInMs: number = Date.parse(date2) - Date.parse(date1);
+let diffInHours: number = diffInMs / 1000 / 60 / 60;
+
+console.log(diffInHours);
+---------------------------------------------
+let date1 = new Date(params.data.incidentTime).getTime();
+let date2 = new Date(params.data.creationTime).getTime();
+let time = date1 - date2;  //msec
+let hoursDiff = time / (3600 * 1000);
+---------------------------------------------
+let date1 = new Date(params.data.incidentTime).getTime();
+let date2 = new Date(params.data.creationTime).getTime();
+let time = date1 - date2;  //msec
+let hoursDiff = time / (3600 * 1000);
+

@@ -17,16 +17,30 @@
 
 <ion-content >
 
-    <ion-list radio-group [(ngModel)]="payment_mode">
+   
         <ion-item-divider color="light">Payment Mode</ion-item-divider>
-        <ion-item>
-            <ion-label>Cash on delivery</ion-label>
-            <ion-radio checked="true" value="cod"></ion-radio>
+        <ion-item >
+            <ion-label>Paypal</ion-label>
+            <ion-radio checked="true" value="paypal"></ion-radio>
         </ion-item>
 
+        <ion-item-divider color="light">Delvery details </ion-item-divider>
+            <ion-item>
+            <ion-label stacked> {{col_address}} </ion-label>
+         
+             <ion-label stacked>{{cartService.nextDate(5)}} </ion-label>  
+             <ion-radio checked="true" value="cartService.nextDate(5)"></ion-radio>
+        </ion-item>
+        
+
+  <!-- 
+      <ion-list radio-group [(ngModel)]="payment_mode">
+        <ion-item-divider color="light">Payment Mode</ion-item-divider>
+        <ion-item>
+            <ion-label>Paypal</ion-label>
+            <ion-radio checked="true" value="paypal"></ion-radio>
+        </ion-item>
     </ion-list>
-
-
     <ion-list radio-group  [(ngModel)]="delivery_details">
         <ion-item-divider color="light">Delivery Details
             <ion-buttons end>
@@ -35,7 +49,7 @@
                 </button>
             </ion-buttons>
         </ion-item-divider>
-        
+      
         <ion-item-sliding *ngFor="let address of addresses | async">
                 <ion-item>
                     <ion-label>  
@@ -53,9 +67,41 @@
             </ion-item-sliding>
 
     </ion-list>
-
+    -->
+    <ion-content padding>
+            <form name="paymentForm" >
+                <ion-item>
+                    <ion-label >Amount</ion-label>
+                    <h2 item-right >£{{cartService.cartAmount}}</h2>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Currency</ion-label>
+                    <ion-select [(ngModel)]="payment.currency" name="currency">
+                        <ion-option value="{{currency}}" *ngFor="let currency of currencies">{{currency}}</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Description</ion-label>
+                    <ion-input type="text" name="description" [(ngModel)]="payment.shortDescription"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Intent</ion-label>
+                    <ion-input type="text" name="intent" [(ngModel)]="payment.intent"></ion-input>
+                </ion-item>
+            </form>
+                <ion-item>
+                        <ion-label>Accept Terms and Condition</ion-label>
+                        <ion-checkbox [(ngModel)]="agreed"></ion-checkbox>
+                      </ion-item>
+                <p>
+                    <button ion-button block color="secondary" [disabled]="!agreed" (click)="makePayment()">   <ion-icon name="logo-gbp"></ion-icon>MAKE PAYMENT</button>
+                </p>
+            
+        </ion-content>
+  <!-- 
+          <ion-checkbox [(ngModel)]="agreed" (ionChange)="openTerms()"></ion-checkbox>
     <button ion-button icon-left block color="secondary" (click)="pay()">
             <ion-icon name="logo-usd"></ion-icon> Pay
     </button>
-
+-->
 </ion-content>
