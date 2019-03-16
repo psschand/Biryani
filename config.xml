@@ -84,5 +84,5 @@
     <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-app-version" spec="~0.1.9" />
     <plugin name="cordova-plugin-app-update" spec="~1.6.0" />
-    <plugin name="com.paypal.cordova.mobilesdk" spec="~3.5.0" />
+    <plugin name="com.paypal.cordova.mobilesdk" spec="3.5.0" />
 </widget>

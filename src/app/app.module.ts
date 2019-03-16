@@ -30,7 +30,7 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import { AppVersion } from '@ionic-native/app-version';
+//import { AppVersion } from '@ionic-native/app-version';
 
 
 
